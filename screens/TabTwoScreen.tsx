@@ -3,6 +3,7 @@ import React from 'react'
 import {Alert, ImageBackground, StyleSheet, Text, TouchableOpacity, View} from 'react-native'
 import {Camera} from 'expo-camera'
 import {FlashMode} from "expo-camera/build/Camera.types";
+import {MaterialIcons} from "@expo/vector-icons";
 
 let camera: Camera
 export default function TabTwoScreen() {
@@ -49,7 +50,8 @@ export default function TabTwoScreen() {
       setCameraType(Camera.Constants.Type.back)
     }
   }
-  return (
+  // @ts-ignore
+    return (
       <View style={styles.container}>
         {startCamera ? (
             <View
@@ -61,6 +63,7 @@ export default function TabTwoScreen() {
               {previewVisible && capturedImage ? (
                   <CameraPreview photo={capturedImage} savePhoto={__savePhoto} retakePicture={__retakePicture} />
               ) : (
+                  <>
                   <Camera
                       type={cameraType}
                       flashMode={flashMode}
@@ -69,91 +72,16 @@ export default function TabTwoScreen() {
                         // @ts-ignore
                         camera = r
                       }}
-                  >
-                    <View
-                        style={{
-                          flex: 1,
-                          width: '100%',
-                          backgroundColor: 'transparent',
-                          flexDirection: 'row'
-                        }}
-                    >
-                      <View
-                          style={{
-                            position: 'absolute',
-                            left: '5%',
-                            top: '10%',
-                            flexDirection: 'column',
-                            justifyContent: 'space-between'
-                          }}
-                      >
-                        <TouchableOpacity
-                            onPress={__handleFlashMode}
-                            style={{
-                              backgroundColor: flashMode === 'off' ? '#000' : '#fff',
-                              //borderRadius: '50%',
-                              height: 25,
-                              width: 25
-                            }}
-                        >
-                          <Text
-                              style={{
-                                fontSize: 20
-                              }}
-                          >
-                            ⚡️
-                          </Text>
+                  />
+
+                  <View style={{position: 'absolute', bottom: 0, left: 0, right: 0, height: 80, backgroundColor: 'rgba(0, 0, 0, 0.6)', flexDirection: 'row'}}>
+                    {["brightness-auto", "iso", "flash-auto", "photo-filter", "pie-chart"].map(iconName => (
+                        <TouchableOpacity key={iconName} style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+                        <MaterialIcons name={iconName} style={{fontSize: 30, color: 'white'}}/>
                         </TouchableOpacity>
-                        <TouchableOpacity
-                            onPress={__switchCamera}
-                            style={{
-                              marginTop: 20,
-                              //borderRadius: '50%',
-                              height: 25,
-                              width: 25
-                            }}
-                        >
-                          <Text
-                              style={{
-                                fontSize: 20
-                              }}
-                          >
-                            {cameraType === 'front' ? '🤳' : '📷'}
-                          </Text>
-                        </TouchableOpacity>
-                      </View>
-                      <View
-                          style={{
-                            position: 'absolute',
-                            bottom: 0,
-                            flexDirection: 'row',
-                            flex: 1,
-                            width: '100%',
-                            padding: 20,
-                            justifyContent: 'space-between'
-                          }}
-                      >
-                        <View
-                            style={{
-                              alignSelf: 'center',
-                              flex: 1,
-                              alignItems: 'center'
-                            }}
-                        >
-                          <TouchableOpacity
-                              onPress={__takePicture}
-                              style={{
-                                width: 70,
-                                height: 70,
-                                bottom: 0,
-                                borderRadius: 50,
-                                backgroundColor: '#fff'
-                              }}
-                          />
-                        </View>
-                      </View>
-                    </View>
-                  </Camera>
+                  ))}
+                  </View>
+                  </>
               )}
             </View>
         ) : (
