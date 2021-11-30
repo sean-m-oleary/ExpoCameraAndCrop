@@ -50,9 +50,9 @@ export default function ModalScreen() {
     setPreviewVisible(true)
       //TODO play sound
       //TODO show alert
-      /*Alert.alert('Photo Taken', 'Please see the preview and retake or keep the photo...', [
+      Alert.alert('Photo Taken', 'Please see the preview and retake or keep the photo...', [
           { text: 'OK', onPress: () => console.log('OK Pressed') },
-      ]);*/
+      ]);
 
     //setStartCamera(false)
 
